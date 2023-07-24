@@ -1,19 +1,69 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import LoginView from '../views/LoginView.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
-    name: 'home',
-    component: HomeView
+    name: '登录页面',
+    component: LoginView
   },
   {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
+    path: '/home',
+    name: '首页',
+    component: () => { return import((`@/views/HomeView.vue`)) },
+    redirect: '/home/dashboard',
+    children: [
+      {
+        path: '/home/dashboard',
+        name: '仪表盘',
+        component: () => { return import((`@/views/dashboard/DashboardView.vue`))}
+      },
+
+
+      {
+        path: '/human/home',
+        name: '员工信息管理',
+        component: () => { return import((`@/views/human/HomeView.vue`))},
+        redirect: '/human/human',
+        children: [
+          {
+            path: '/human/human',
+            name: '员工信息管理',
+            component: () => { return import((`@/views/human/HumanView.vue`))}
+          },
+          {
+            path: '/human/entry',
+            name: '员工入职登记',
+            component: () => { return import((`@/views/human/EntryView.vue`))}
+          },
+          {
+            path: '/human/resignation',
+            name: '离职员工查看',
+            component: () => { return import((`@/views/human/ResignationView.vue`))}
+          },
+          {
+            path: '/human/department',
+            name: '部门信息管理',
+            component: () => { return import((`@/views/human/DepartmentView.vue`))}
+          },
+          {
+            path: '/human/position',
+            name: '职位信息管理',
+            component: () => { return import((`@/views/human/PositionView.vue`))}
+          },
+        ]
+      },
+      {
+        path: '/system/system',
+        name: '系统管理',
+        component: () => { return import((`@/views/system/SystemView.vue`))}
+      },
+      {
+        path: '/system/user',
+        name: '用户管理',
+        component: () => { return import((`@/views/system/UserView.vue`))}
+      }
+    ]
   }
 ]
 
