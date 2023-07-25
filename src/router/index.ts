@@ -37,11 +37,6 @@ const routes: Array<RouteRecordRaw> = [
             component: () => { return import((`@/views/human/EntryView.vue`))}
           },
           {
-            path: '/human/resignation',
-            name: '离职员工查看',
-            component: () => { return import((`@/views/human/ResignationView.vue`))}
-          },
-          {
             path: '/human/department',
             name: '部门信息管理',
             component: () => { return import((`@/views/human/DepartmentView.vue`))}
@@ -53,6 +48,41 @@ const routes: Array<RouteRecordRaw> = [
           },
         ]
       },
+
+      {
+        path: '/product/home',
+        name: '产品设计',
+        component: () => { return import((`@/views/product/HomeView.vue`))},
+        redirect: '/product/files',
+        children: [
+          {
+            path: '/product/files',
+            name: '产品设计档案管理',
+            component: () => { return import((`@/views/product/FilesView.vue`))}
+          },
+          {
+            path: '/product/hero',
+            name: '产品分类管理',
+            component: () => { return import((`@/views/product/HeroView.vue`))}
+          },
+          {
+            path: '/product/materials',
+            name: '产品物料管理',
+            component: () => { return import((`@/views/product/MaterialsView.vue`))}
+          },
+          {
+            path: '/product/input',
+            name: '产品档案登记',
+            component: () => { return import((`@/views/product/InputView.vue`))}
+          },
+          {
+            path: '/product/file',
+            name: '设计档案管理',
+            component: () => { return import((`@/views/product/FileView.vue`))}
+          },
+        ]
+      },
+
       {
         path: '/system/system',
         name: '系统管理',

@@ -17,35 +17,20 @@
 import router from "@/router";
 import {ref} from "vue";
 
-const indicator = ref("员工信息管理")
+const indicator = ref("产品档案管理")
 const tree =  [
   {
-    label: '员工信息',
-    children: [
-      {
-        label: '员工入职登记',
-      },
-      {
-        label: '员工信息管理',
-      }
-    ],
+    label: '产品档案登记',
   },
   {
-    label: '部门信息',
-    children: [
-      {
-        label: '部门信息管理',
-      }
-    ],
+    label: '设计档案管理',
   },
   {
-    label: '职位信息',
-    children: [
-      {
-        label: '职位信息管理',
-      }
-    ],
+    label: '产品分类管理',
   },
+  {
+    label: '产品物料管理',
+  }
 ];
 
 const che = (value: any) => {
