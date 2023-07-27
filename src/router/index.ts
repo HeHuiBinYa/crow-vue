@@ -50,35 +50,35 @@ const routes: Array<RouteRecordRaw> = [
       },
 
       {
-        path: '/product/home',
+        path: '/design/home',
         name: '产品设计',
-        component: () => { return import((`@/views/product/HomeView.vue`))},
-        redirect: '/product/files',
+        component: () => { return import((`@/views/design/HomeView.vue`))},
+        redirect: '/design/files',
         children: [
           {
-            path: '/product/files',
+            path: '/design/files',
             name: '产品设计档案管理',
-            component: () => { return import((`@/views/product/FilesView.vue`))}
+            component: () => { return import((`@/views/design/FileView.vue`))}
           },
           {
-            path: '/product/hero',
+            path: '/design/hero',
             name: '产品分类管理',
-            component: () => { return import((`@/views/product/HeroView.vue`))}
+            component: () => { return import((`@/views/design/HeroView.vue`))}
           },
           {
-            path: '/product/materials',
+            path: '/design/materials',
             name: '产品物料管理',
-            component: () => { return import((`@/views/product/MaterialsView.vue`))}
+            component: () => { return import((`@/views/design/MaterialsView.vue`))}
           },
           {
-            path: '/product/input',
+            path: '/design/input',
             name: '产品档案登记',
-            component: () => { return import((`@/views/product/InputView.vue`))}
+            component: () => { return import((`@/views/design/InputView.vue`))}
           },
           {
-            path: '/product/file',
+            path: '/design/file',
             name: '设计档案管理',
-            component: () => { return import((`@/views/product/FileView.vue`))}
+            component: () => { return import((`@/views/design/FileView.vue`))}
           },
         ]
       },

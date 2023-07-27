@@ -6,6 +6,15 @@
         <t-col :span="10" class="col"><t-input label="登记人：" size="large" disabled/></t-col>
         <t-col :span="5" class="col"><t-input label="产品编号：" size="large" disabled/></t-col>
         <t-col :span="5" class="col"><t-input label="产品名称：" size="large" class="inp"/></t-col>
+        <t-col :span="3">
+          <t-select size="large" class="sel" placeholder="一级分类"/>
+        </t-col>
+        <t-col :span="3">
+          <t-select size="large" class="sel" placeholder="二级分类"/>
+        </t-col>
+        <t-col :span="3">
+          <t-select size="large" class="sel" placeholder="三级分类"/>
+        </t-col>
         <t-col :span="5" class="col"><t-input label="用途类型：" size="large"/></t-col>
         <t-col :span="5" class="col"><t-input label="计量单位：" suffix="m" size="large" class="inp"/></t-col>
         <t-col :span="5" class="col"><t-input label="供应商集合：" size="large"/></t-col>
@@ -40,8 +49,12 @@ h1{
   .col{
     margin: 10px;
     .inp{
-      width: 610px;
+      width: 545px;
     }
+  }
+  .sel{
+    margin: 10px;
+    width: 450px;
   }
 }
 </style>

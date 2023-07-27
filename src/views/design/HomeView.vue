@@ -17,16 +17,16 @@
 import router from "@/router";
 import {ref} from "vue";
 
-const indicator = ref("产品档案管理")
+const indicator = ref("设计档案管理")
 const tree =  [
+  {
+    label: '产品分类管理',
+  },
   {
     label: '产品档案登记',
   },
   {
     label: '设计档案管理',
-  },
-  {
-    label: '产品分类管理',
   },
   {
     label: '产品物料管理',

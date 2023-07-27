@@ -51,7 +51,7 @@
 
 
             <t-col class="col-3">
-              <p>xxxxxxxxxxxxxxxxxxx {{store.user}}</p>
+              <p>xxxxxxxxxxxxxxxxxxx</p>
             </t-col>
           </t-row>
         </t-col>
@@ -62,7 +62,7 @@
 
 <script lang="ts" setup>
 import router from "@/router";
-import {login,getRole} from "@/http/auth/index";
+// import {login,getRole} from "@/http/auth/index";
 import {useCounterStore} from "@/store";
 import {ref} from "vue";
 
@@ -80,28 +80,28 @@ const img = [
 
 const logon = function (){
 
-  login(store.user).then(item => {
-    if (item.code == 200){
-      store.user.tok = item.data.tok;
-      store.user.username = item.data.username;
-      store.user.role = item.data.role;
-      store.user.password = "";
+  // login(store.user).then(item => {
+    // if (item.code == 200){
+    //   store.user.tok = item.data.tok;
+    //   store.user.username = item.data.username;
+    //   store.user.role = item.data.role;
+    //   store.user.password = "";
       router.push("/home")
-    }else{
-      msg.value = MessagePlugin.info({
-        content: item.message,
-        duration: 1000,
-        zIndex: 1001,
-        attach: '#message-toggle'
-      })
-    }
-  })
+    // }else{
+    //   msg.value = MessagePlugin.info({
+    //     content: item.message,
+    //     duration: 1000,
+    //     zIndex: 1001,
+    //     attach: '#message-toggle'
+    //   })
+    // }
+  // })
 }
 
-getRole().then(item => {
-  auth.value=item.data
-  store.user.role=item.data[0].role
-})
+// getRole().then(item => {
+//   auth.value=item.data
+//   store.user.role=item.data[0].role
+// })
 </script>
 
 <style lang="scss">
