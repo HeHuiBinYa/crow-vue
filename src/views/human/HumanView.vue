@@ -68,7 +68,7 @@
       </t-row>
     </t-col>
 
-    <t-drawer v-model:visible="visible" size="medium" :header="header" :on-confirm="drawerClose" :close-btn="true">
+    <t-drawer v-model:visible="visible" size="medium" :header="header"  :close-on-overlay-click="false" :on-confirm="drawerClose" :close-btn="true">
       <t-col :span="12">
         <t-input-group class="groups">
           <span class="titles">姓名：</span>
@@ -145,6 +145,7 @@
                dialogProps: { preventScrollThrough: true },
                buttonProps: customText ? { content: '显示列控制', theme: 'primary', variant: 'base' } : undefined,
             }"
+
             hover="true"/>
       </t-list>
     </t-col>

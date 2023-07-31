@@ -83,6 +83,75 @@ const routes: Array<RouteRecordRaw> = [
         ]
       },
 
+
+      {
+        path: '/product/home',
+        name: '生产管理',
+        component: () => { return import((`@/views/product/HomeView.vue`))},
+        redirect: "/product/logistics",
+        children: [
+          {
+            path: '/product/logistics',
+            name: '生产计划设计',
+            component: () => { return import((`@/views/product/LogisticsView.vue`))}
+          },
+          {
+            path: '/product/planning',
+            name: '生产计划管理',
+            component: () => { return import((`@/views/product/PlanningView.vue`))}
+          },
+          {
+            path: '/product/dispatch',
+            name: '生产调度管理',
+            component: () => { return import((`@/views/product/DispatchView.vue`))}
+          }
+        ]
+      },
+
+
+      {
+        path: '/mission/home',
+        name: '我的任务',
+        component: () => { return import((`@/views/mission/HomeView.vue`))},
+        redirect: '/mission/review',
+        children: [
+          {
+            path: '/mission/review',
+            name: '产品档案设计审核',
+            component: () => { return import((`@/views/mission/ReviewView.vue`))}
+          },
+          {
+            path: '/mission/product',
+            name: '生产计划设计审核',
+            component: () => { return import((`@/views/mission/ProductView.vue`))}
+          }
+        ]
+      },
+
+      {
+        path: '/inventory/home',
+        name: '库存管理',
+        component: () => { return import((`@/views/inventory/HomeView.vue`))},
+        redirect: "/inventory/stock",
+        children: [
+          {
+            path: '/inventory/storage',
+            name: '入库申请管理',
+            component: () => { return import((`@/views/inventory/StorageView.vue`))}
+          },
+          {
+            path: '/inventory/dispatch',
+            name: '出入库调度管理',
+            component: () => { return import((`@/views/inventory/DispatchView.vue`))}
+          },
+          {
+            path: '/inventory/stock',
+            name: '安全库存配置管理',
+            component: () => { return import((`@/views/inventory/SafeStockView.vue`))}
+          }
+        ]
+      },
+
       {
         path: '/system/system',
         name: '系统管理',

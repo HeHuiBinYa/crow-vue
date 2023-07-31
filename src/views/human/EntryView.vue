@@ -9,7 +9,7 @@
       <t-col :span="12">
         <t-input-group class="group">
           <span class="title">编号：</span>
-          <t-input type="text" class="range" placeholder="请生成编号"/>
+          <t-input type="text" class="range" disabled placeholder="请生成编号"/>
         </t-input-group>
       </t-col>
 

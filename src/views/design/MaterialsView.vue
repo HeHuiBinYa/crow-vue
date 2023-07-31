@@ -229,13 +229,13 @@ const placement = ref('top-left');
 const customText = ref(false);
 const columns = ref([
   { colKey: 'mid', title: '序号',align: 'center',width: '80px',fixed: leftFixedColumn.value >= 2 ? 'left' : undefined},
-  { colKey: 'design', title: '流程组成设计单号',align: 'center',width: '250px' ,fixed: leftFixedColumn.value >= 2 ? 'left' : undefined},
+  { colKey: 'design', title: '物料编号',align: 'center',width: '250px' ,fixed: leftFixedColumn.value >= 2 ? 'left' : undefined},
   { colKey: 'designer', title: '设计人',align: 'center',width: '120px',fixed: leftFixedColumn.value >= 2 ? 'left' : undefined},
   { colKey: 'register', title: '登记人',align: 'center',width: '120px'},
   { colKey: 'registerime', title: '登记时间',align: 'center',width: '120px'},
   { colKey: 'checker', title: '复核人',align: 'center',width: '120px'},
   { colKey: 'status', title: '审核状态',align: 'center',width: '120px'},
-  { colKey: 'designname', title: '物流名称',align: 'center',width: '120px'},
+  { colKey: 'designname', title: '物料名称',align: 'center',width: '120px'},
   { colKey: 'type', title: '用途类型',align: 'center',width: '120px'},
   { colKey: 'munit', title: '单位',align: 'center',width: '120px'},
   { colKey: 'amount', title: '数量',align: 'center',width: '120px'},
