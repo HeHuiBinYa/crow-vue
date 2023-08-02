@@ -7,7 +7,7 @@
       </t-col>
 
       <t-col :span="10">
-        <router-view></router-view>
+          <router-view></router-view>
       </t-col>
     </t-row>
   </t-col>
@@ -24,9 +24,6 @@ const tree =  [
   },
   {
     label: '生产计划管理',
-  },
-  {
-    label: '生产调度管理',
   }
 ];
 

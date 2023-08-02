@@ -3,7 +3,7 @@
     <t-col class="col">
       <t-row class="row-2">
         <t-col class="col-s-0">
-          <h1>XXXX xxxxx</h1>
+          <h1> E R P 企 业 资 源 管 理 系 统</h1>
           <t-space break-line>
             <span>正直</span>
             <t-divider layout="vertical" />

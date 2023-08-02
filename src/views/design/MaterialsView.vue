@@ -71,6 +71,7 @@
     </t-row>
     <template #footer>
       <t-button>修改</t-button>
+      <t-button theme="warning">重新审核</t-button>
       <t-button theme="danger">删除</t-button>
       <t-button variant="outline" @click="visible = false"> 取消 </t-button>
     </template>
@@ -228,13 +229,13 @@ const leftFixedColumn = ref(2);
 const placement = ref('top-left');
 const customText = ref(false);
 const columns = ref([
-  { colKey: 'mid', title: '序号',align: 'center',width: '80px',fixed: leftFixedColumn.value >= 2 ? 'left' : undefined},
+  { colKey: 'mid', title: '序号',align: 'center',width: '80px'},
   { colKey: 'design', title: '物料编号',align: 'center',width: '250px' ,fixed: leftFixedColumn.value >= 2 ? 'left' : undefined},
-  { colKey: 'designer', title: '设计人',align: 'center',width: '120px',fixed: leftFixedColumn.value >= 2 ? 'left' : undefined},
+  { colKey: 'file.name', title: '产品名称',align: 'center',width: '120px',fixed: leftFixedColumn.value >= 2 ? 'left' : undefined},
+  { colKey: 'designer', title: '设计人',align: 'center',width: '120px'},
   { colKey: 'register', title: '登记人',align: 'center',width: '120px'},
   { colKey: 'registerime', title: '登记时间',align: 'center',width: '120px'},
   { colKey: 'checker', title: '复核人',align: 'center',width: '120px'},
-  { colKey: 'status', title: '审核状态',align: 'center',width: '120px'},
   { colKey: 'designname', title: '物料名称',align: 'center',width: '120px'},
   { colKey: 'type', title: '用途类型',align: 'center',width: '120px'},
   { colKey: 'munit', title: '单位',align: 'center',width: '120px'},
@@ -244,7 +245,7 @@ const columns = ref([
   { colKey: 'pricesum', title: '物流总成本',align: 'center',width: '120px'},
   { colKey: 'created', title: '创建时间',align: 'center',width: '120px'},
   { colKey: 'updated', title: '更新时间',align: 'center',width: '120px'},
-  { colKey: 'file.name', title: '产品名称',align: 'center',width: '120px',fixed: leftFixedColumn.value >= 2 ? 'right' : undefined}
+  { colKey: 'status', title: '审核状态',align: 'center',width: '120px',fixed: leftFixedColumn.value >= 2 ? 'right' : undefined},
 ]);
 
 // 单选

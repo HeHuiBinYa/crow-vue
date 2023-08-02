@@ -99,11 +99,6 @@ const routes: Array<RouteRecordRaw> = [
             path: '/product/planning',
             name: '生产计划管理',
             component: () => { return import((`@/views/product/PlanningView.vue`))}
-          },
-          {
-            path: '/product/dispatch',
-            name: '生产调度管理',
-            component: () => { return import((`@/views/product/DispatchView.vue`))}
           }
         ]
       },
@@ -124,6 +119,16 @@ const routes: Array<RouteRecordRaw> = [
             path: '/mission/product',
             name: '生产计划设计审核',
             component: () => { return import((`@/views/mission/ProductView.vue`))}
+          },
+          {
+            path: '/mission/applyFor',
+            name: '入库申请提交',
+            component: () => { return import((`@/views/mission/StorageApplyForView.vue`))}
+          },
+          {
+            path: '/mission/examine',
+            name: '入库申请审核',
+            component: () => { return import((`@/views/mission/StorageExamineView.vue`))}
           }
         ]
       },

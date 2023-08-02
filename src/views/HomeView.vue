@@ -237,6 +237,8 @@ const changeHandler = (active: any) => {
   console.log('change', active);
   item.value = active
 };
+
+
 </script>
 
 <style lang="scss" scoped>
@@ -261,10 +263,9 @@ const changeHandler = (active: any) => {
 }
 
 .view_yes{
-  transition: 1s;
   width: 96.5vw;
+  transition: 1s;
   justify-content: center;
-  //background-color: #EBEEF2;
   .rou{
     height: 91.6vh;
     padding: 10px;
