@@ -1,10 +1,10 @@
 <template>
-  <t-col :span="12" style="height: 89vh">
+  <t-col :span="12">
     <t-row>
       <t-col :span="12">
         <t-row class="row">
           <t-col :span="12">
-            <h3>待审核产品：12/30</h3>
+            <h3>待审核产品档案：12/30</h3>
           </t-col>
           <t-col :span="12" class="col"><t-input label="设计单编号：" size="large" disabled/></t-col>
           <t-col :span="6" class="col"><t-input label="产品名称：" size="large" disabled/></t-col>
@@ -18,7 +18,7 @@
             <t-input label="物料总成本：" size="large" disabled/>
           </t-col>
           <t-col :span="12">
-            <t-list style="height: 30vh">
+            <t-list >
               <t-table v-model:columns="columns" v-model:data="data" v-on:row-dblclick="dblclick" :hover="true"/>
             </t-list>
           </t-col>
@@ -58,7 +58,7 @@ import {ref} from "vue";
 const header = ref("修改信息")
 const visible = ref(false)
 const data = []
-for (let i = 1; i <= 11; i++) {
+for (let i = 1; i <= 6; i++) {
   data.push({
     mid: i,
     design: 'AD100001AD1001'+i,

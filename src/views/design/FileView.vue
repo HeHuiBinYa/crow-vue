@@ -89,6 +89,7 @@
     </t-row>
     <template #footer>
       <t-button>修改</t-button>
+      <t-button theme="warning">重新审核</t-button>
       <t-button theme="danger">删除</t-button>
       <t-button variant="outline" @click="visible = false"> 取消 </t-button>
     </template>
@@ -193,7 +194,7 @@
                placement,
                fields: ['fid', 'pid', 'heroA.cname', 'heroB.cname', 'heroC.cname', 'type',
                 'unit', 'grou', 'costprice', 'listprice', 'register', 'checker', 'checktime',
-                'checktag', 'created', 'updated'],
+                 'created', 'updated'],
                dialogProps: { preventScrollThrough: true },
                buttonProps: customText ? { content: '显示列控制', theme: 'primary', variant: 'base' } : undefined,
             }"
@@ -261,9 +262,9 @@ const columns = ref([
   { colKey: 'register', title: '登记人',align: 'center',width: '120px'},
   { colKey: 'checker', title: '复核人',align: 'center',width: '120px'},
   { colKey: 'checktime', title: '复核时间',align: 'center',width: '120px'},
-  { colKey: 'checktag', title: '审核标志',align: 'center',width: '120px'},
   { colKey: 'created', title: '创建时间',align: 'center',width: '120px'},
-  { colKey: 'updated', title: '更新时间',align: 'center',width: '120px',fixed: leftFixedColumn.value >= 2 ? 'right' : undefined}
+  { colKey: 'updated', title: '更新时间',align: 'center',width: '120px',fixed: leftFixedColumn.value >= 2 ? 'right' : undefined},
+  { colKey: 'checktag', title: '审核标志',align: 'center',width: '120px',fixed: leftFixedColumn.value >= 2 ? 'right' : undefined}
 ]);
 
 // 单选

@@ -1,10 +1,10 @@
 <template>
-  <t-col :span="12" style="height: 89vh">
+  <t-col :span="12">
     <t-row>
       <t-col :span="12">
         <t-row class="row">
           <t-col :span="12">
-            <h3>待审核产品：12/30</h3>
+            <h3>待审核生产计划：12/30</h3>
           </t-col>
           <t-col :span="12" class="col"><t-input label="派工单编号：" size="large" disabled/></t-col>
           <t-col :span="6" class="col"><t-input label="产品名称：" size="large" disabled/></t-col>
@@ -17,7 +17,7 @@
             <t-textarea placeholder="产品描述" size="large" disabled/>
           </t-col>
           <t-col :span="12">
-            <t-list style="height: 30vh">
+            <t-list >
               <t-table v-model:columns="columns" v-model:data="data" v-on:row-dblclick="dblclick" :hover="true"/>
             </t-list>
           </t-col>
@@ -33,7 +33,7 @@
       </t-col>
 
       <t-col :span="12">
-        <t-row style="margin: 20px">
+        <t-row style="margin: 15px">
           <t-col :span="2">
             <t-button style="width: 100%">上一项</t-button>
           </t-col>
@@ -57,7 +57,7 @@ import {ref} from "vue";
 const header = ref("修改信息")
 const visible = ref(false)
 const data = []
-for (let i = 1; i <= 11; i++) {
+for (let i = 1; i <= 5; i++) {
   data.push({
     prdetailsnumber: 'AD100001AD1001'+i,
     prprocedureid: 'XXX工序'+i,

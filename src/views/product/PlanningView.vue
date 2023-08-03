@@ -1,84 +1,90 @@
 <template>
   <t-drawer v-model:visible="visible" size="50%" :header="header" :close-on-overlay-click="false" :on-confirm="drawerClose"  :close-btn="true">
-    <t-drawer v-model:visible="visibles" size="medium" :header="header"  :on-confirm="drawerCloses" :close-btn="true">
+    <t-drawer v-model:visible="visibles" size="90%" :header="header"  :on-confirm="drawerCloses" :close-btn="true">
       <t-row>
-        <t-col :span="12">
+        <t-col :span="6">
           <t-input-group class="groups">
             <span class="titles">工序序号：</span>
             <t-input type="text" class="ranges" disabled />
           </t-input-group>
         </t-col>
-        <t-col :span="12">
+        <t-col :span="6">
           <t-input-group class="groups">
             <span class="titles">工序编号：</span>
             <t-input type="text" class="ranges" disabled />
           </t-input-group>
         </t-col>
-        <t-col :span="12">
+        <t-col :span="6">
           <t-input-group class="groups">
             <span class="titles">物料名称：</span>
             <t-input type="text" class="ranges"  />
           </t-input-group>
         </t-col>
-        <t-col :span="12">
+        <t-col :span="6">
           <t-input-group class="groups">
             <span class="titles">工序名称：</span>
             <t-input type="text" class="ranges"  />
           </t-input-group>
         </t-col>
-        <t-col :span="12">
+        <t-col :span="6">
           <t-input-group class="groups">
             <span class="titles">设计工时数：</span>
             <t-input type="text" class="ranges"/>
           </t-input-group>
         </t-col>
-        <t-col :span="12">
+        <t-col :span="6">
           <t-input-group class="groups">
             <span class="titles">实际工时数：</span>
             <t-input type="text" class="ranges"  />
           </t-input-group>
         </t-col>
-        <t-col :span="12">
+        <t-col :span="6">
           <t-input-group class="groups">
             <span class="titles">设计工时成本：</span>
             <t-input type="text" class="ranges"  />
           </t-input-group>
         </t-col>
-        <t-col :span="12">
+        <t-col :span="6">
           <t-input-group class="groups">
             <span class="titles">实际工时成本：</span>
             <t-input type="text" class="ranges"  />
           </t-input-group>
         </t-col>
-        <t-col :span="12">
+        <t-col :span="6">
           <t-input-group class="groups">
             <span class="titles">设计物料成本：</span>
             <t-input type="text" class="ranges"  />
           </t-input-group>
         </t-col>
-        <t-col :span="12">
+        <t-col :span="6">
           <t-input-group class="groups">
             <span class="titles">实际物料成本：</span>
             <t-input type="text" class="ranges"  />
           </t-input-group>
         </t-col>
-        <t-col :span="12">
+        <t-col :span="6">
           <t-input-group class="groups">
             <span class="titles">单位工时成本：</span>
             <t-input type="text" class="ranges"  />
           </t-input-group>
         </t-col>
-        <t-col :span="12">
+        <t-col :span="6">
           <t-input-group class="groups">
             <span class="titles">工序投产数量：</span>
             <t-input type="text" class="ranges"  />
           </t-input-group>
         </t-col>
-        <t-col :span="12">
+        <t-col :span="6">
           <t-input-group class="groups">
             <span class="titles">工序合格数量：</span>
             <t-input type="text" class="ranges"  />
           </t-input-group>
+        </t-col>
+        <t-col :span="12">
+          <t-button class="but">工序物料添加</t-button>
+          <t-list>
+            <t-table v-model:columns="columns" v-model:data="data" :hover="true"/>
+          </t-list>
         </t-col>
       </t-row>
       <template #footer>
@@ -109,27 +115,22 @@
           </t-col>
           <t-col :span="12">
             <t-button @click="visible=true">添加生产工序</t-button>
-            <t-list style="height: 30vh">
+            <t-list>
               <t-table v-model:columns="columns" v-model:data="data" v-on:row-dblclick="dblclicks" :hover="true"/>
             </t-list>
-          </t-col>
-          <t-col :span="6">
-            <t-button block theme="primary" class="btn">发布生产计划</t-button>
-          </t-col>
-          <t-col :span="6" >
-            <t-button block theme="warning" class="btn">重置</t-button>
           </t-col>
         </t-row>
       </t-col>
     </t-row>
     <template #footer>
       <t-button>修改</t-button>
+      <t-button theme="warning">重新审核</t-button>
       <t-button theme="danger">删除</t-button>
       <t-button variant="outline" @click="visible = false"> 取消 </t-button>
     </template>
   </t-drawer>
 
-  <t-row style="height: 91vh">
+  <t-row style="height: 89vh">
     <t-col :span="12">
       <t-row>
         <t-col :span="10">
