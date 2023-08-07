@@ -1,7 +1,7 @@
 <template>
   <t-col :span="12">
     <t-row>
-      <t-col :span="2">
+      <t-col :span="2" style="height: 89vh">
         <h4>当前：{{indicator}}</h4>
         <t-tree hover :data="tree" :expand-level="1" :line="true" v-on:click="che"/>
       </t-col>

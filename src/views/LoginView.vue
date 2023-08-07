@@ -63,12 +63,11 @@
 <script lang="ts" setup>
 import router from "@/router";
 // import {login,getRole} from "@/http/auth/index";
-import {useCounterStore} from "@/store";
+import {userStore} from "@/store/user";
 import {ref} from "vue";
-
 import {MessagePlugin} from "tdesign-vue-next";
 
-const store = useCounterStore()
+const store = userStore()
 const auth = ref('')
 const msg = ref()
 

@@ -1,5 +1,5 @@
 import http from '@/http/index'
-import {useCounterStore} from '@/store/index'
+import {userStore} from '@/store/user/index'
 
 export const login = (data: any) => {
     console.log(data)
@@ -15,7 +15,7 @@ export const login = (data: any) => {
 export const quit = () => {
     return http.post("/auth/quit",null,{
         params: {
-            tok: useCounterStore().user.tok
+            tok: userStore().user.tok
         }
     })
 }

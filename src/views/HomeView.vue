@@ -269,9 +269,11 @@ const changeHandler = (active: any) => {
   .rou{
     height: 91.6vh;
     padding: 10px;
+    position: relative;
     .rou-view{
       height: 92vh;
       border-radius: 5px;
+      position: relative;
     }
   }
 }
@@ -282,9 +284,11 @@ const changeHandler = (active: any) => {
   .rou{
     height: 91.6vh;
     padding: 10px;
+
     .rou-view{
       height: 92vh;
       border-radius: 5px;
+      position: relative;
     }
   }
 }
