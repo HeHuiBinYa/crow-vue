@@ -1,12 +1,6 @@
 <template>
-  <t-dialog
-      :placement="placement"
-      header="新职位录入"
-      :top="top"
-      :visible="visibleTop"
-      :on-confirm="cloe"
-      :on-close="cloe"
-  >
+  <t-dialog :placement="placement" header="新职位录入" :top="top" :visible="visibleTop" :on-confirm="cloe"
+            :on-close="cloe">
     <t-input-group class="groups">
       <span class="titles">职位：</span>
       <t-input type="text" class="ranges" placeholder="请输入你要录入的职位名称"/>

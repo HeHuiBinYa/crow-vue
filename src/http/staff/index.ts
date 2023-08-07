@@ -11,6 +11,14 @@ export const increase = () => {
     })
 }
 
+export const omit = () => {
+    return http.post("/staff/omit_department",null,{
+        params: {
+            did: staffStore().department.did
+        }
+    })
+}
+
 export const edit = () => {
     return http.post("/staff/edit_department",null,{
         params: {

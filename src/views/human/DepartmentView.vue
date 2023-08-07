@@ -1,6 +1,6 @@
 <template>
   <t-col :span="8">
-    <t-drawer v-model:visible="visible" size="medium" :header="header"  :on-confirm="edits" :close-btn="true">
+    <t-drawer v-model:visible="visible" size="medium" :header="header" :close-btn="true">
       <t-col :span="12">
         <t-input-group class="groups">
           <span class="titles">部门名称：</span>
@@ -17,6 +17,11 @@
           <t-input type="text"  class="ranges" v-model="department.duty" placeholder="请输入你要修改的部门职责"/>
         </t-input-group>
       </t-col>
+      <template #footer>
+        <t-button @click="edits">修改</t-button>
+        <t-button theme="danger" @click="omits">删除</t-button>
+        <t-button variant="outline" @click="visible = false"> 取消 </t-button>
+      </template>
     </t-drawer>
   </t-col>
 
@@ -93,13 +98,13 @@
 <script lang="ts" setup>
 import {ref} from "vue";
 import {staffStore} from "@/store/staff";
-import {increase,page,edit} from "@/http/staff/index";
+import {increase,page,edit,omit} from "@/http/staff/index";
 import { MessagePlugin } from 'tdesign-vue-next';
 
 
 const bool = ref(false); // 加载
 const department = ref(staffStore().department)   // 添加数据
-const query = ref(staffStore().query) // 查询数据
+const query = ref(staffStore().query.depar_query) // 查询数据
 const data = ref({  // 展示数据
   records: [],
 })
@@ -139,6 +144,19 @@ const edits = function (){
       department.value.dname ="";
       department.value.position="";
       department.value.duty="";
+      MessagePlugin.info({content: item.message, duration: 1000, zIndex: 1001, attach: '#message-toggle'})
+      Query();
+      return visible.value = false;
+    }else{
+      MessagePlugin.info({content: item.message, duration: 1000, zIndex: 1001, attach: '#message-toggle'})
+      return ;
+    }
+  })
+};
+
+const omits = function (){
+  omit().then(item => {
+    if (item.code === 200){
       MessagePlugin.info({content: item.message, duration: 1000, zIndex: 1001, attach: '#message-toggle'})
       Query();
       return visible.value = false;
