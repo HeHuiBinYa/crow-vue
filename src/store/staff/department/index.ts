@@ -1,6 +1,6 @@
 import {store} from "@/store";
 
-export const staffStore = store('staff',{
+export const departmentStore = store('department',{
     state: () => {
         return {
             department: {
@@ -12,15 +12,13 @@ export const staffStore = store('staff',{
                 updated: ''
             },
             query : {
-                depar_query: {
-                    size: 1,
-                    pageSize: 15,
-                    dname: '',
-                    position: '',
-                    duty: '',
-                    pages: 0,
-                    total: 0
-                }
+                department_size: 1,
+                pageSize: 15,
+                dname: '',
+                position: '',
+                duty: '',
+                pages: 0,
+                total: 0
             }
 
         }

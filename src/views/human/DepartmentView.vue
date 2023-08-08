@@ -47,7 +47,7 @@
 
         <t-col :span="2" class="btn">
           <t-button class="btn-but" theme="primary" @click="search">搜索</t-button>
-          <t-button class="btn-but" theme="success" @click="visibleTop = true">添加</t-button>
+          <t-button class="btn-but" theme="success" @click="vis">添加</t-button>
           <t-button class="btn-but" theme="warning" @click="reset">重置</t-button>
         </t-col>
       </t-row>
@@ -64,7 +64,7 @@
       </t-list>
     </t-col>
     <t-col :span="12">
-      <t-pagination class="page" v-model="query.size" :total="query.total"
+      <t-pagination class="page" v-model="query.department_size" :total="query.total"
                     @page-size-change="onPageSizeChange" :max-page-btn="5" :folded-max-page-btn="5"
                     :page-size="query.pageSize"
                     @current-change="onCurrentChange" :show-page-size="false"/>
@@ -97,14 +97,14 @@
 
 <script lang="ts" setup>
 import {ref} from "vue";
-import {staffStore} from "@/store/staff";
-import {increase,page,edit,omit} from "@/http/staff/index";
+import {departmentStore} from "@/store/staff/department";
+import {increase,page,edit,omit} from "@/http/staff/department";
 import { MessagePlugin } from 'tdesign-vue-next';
 
-
+const visibleTop = ref(false)
 const bool = ref(false); // 加载
-const department = ref(staffStore().department)   // 添加数据
-const query = ref(staffStore().query.depar_query) // 查询数据
+const department = ref(departmentStore().department)   // 添加数据
+const query = ref(departmentStore().query) // 查询数据
 const data = ref({  // 展示数据
   records: [],
 })
@@ -123,11 +123,11 @@ const incre = function (){
     MessagePlugin.info({content: "部门职责不能为空!", duration: 1000, zIndex: 1001, attach: '#message-toggle'})
     return ;
   }
-  increase().then(item => {
+  increase().then(function (item) {
     if (item.code === 200){
-      department.value.dname ="";
-      department.value.position="";
-      department.value.duty="";
+      department.value.dname = "";
+      department.value.position = "";
+      department.value.duty = "";
       MessagePlugin.info({content: item.message, duration: 1000, zIndex: 1001, attach: '#message-toggle'})
       Query();
       return visibleTop.value=false;
@@ -138,12 +138,13 @@ const incre = function (){
   })
 };
 
+// 修改
 const edits = function (){
-  edit().then(item => {
+  edit().then(function (item) {
     if (item.code === 200){
-      department.value.dname ="";
-      department.value.position="";
-      department.value.duty="";
+      department.value.dname = "";
+      department.value.position = "";
+      department.value.duty = "";
       MessagePlugin.info({content: item.message, duration: 1000, zIndex: 1001, attach: '#message-toggle'})
       Query();
       return visible.value = false;
@@ -154,8 +155,9 @@ const edits = function (){
   })
 };
 
+// 删除
 const omits = function (){
-  omit().then(item => {
+  omit().then(function (item) {
     if (item.code === 200){
       MessagePlugin.info({content: item.message, duration: 1000, zIndex: 1001, attach: '#message-toggle'})
       Query();
@@ -171,10 +173,10 @@ const omits = function (){
 const Query = () => {
   bool.value = true;
   data.value.records = []
-  page(query).then(item => {
+  page(query).then(function (item) {
+    console.log(query)
     query.value.pages = item.data.pages
     query.value.total = item.data.total
-    console.log(item.data.records.length)
     for (let i=0;i<item.data.records.length;i++){
       item.data.records[i].created =
           item.data.records[i].created[0]+"年"+
@@ -203,16 +205,16 @@ Query();
 // 搜索按钮
 const search = () => {
   data.value.records = []
-  query.value.size = 1
+  query.value.department_size = 1
   Query();
 }
 // 分页获得页数
 const onPageSizeChange = (size: any) => {
-  query.value.size = size
+  query.value.department_size = size
 }
 // 分页
 const onCurrentChange = (index: any, pageInfo: any) => {
-  query.value.size = index// 分页获得页数
+  query.value.department_size = index// 分页获得页数
   Query()
 }
 // 刷新
@@ -232,10 +234,15 @@ const dblclick = (row: any) => {
   visible.value = true
 }
 
-const visibleTop = ref(false)
+const vis = () => {
+  department.value.dname = ''
+  department.value.position = ''
+  department.value.duty = ''
+  visibleTop.value = true
+}
+
 const placement = 'top'
 const top = '50px';
-
 
 const header = ref("修改信息")
 const visible = ref(false);
@@ -251,7 +258,6 @@ const columns = ref([
 
 // 单选
 const selectedRowKeys = ref([1]);
-
 // 关闭
 const  drawerClose = () => {
   visible.value = false
