@@ -21,6 +21,11 @@ export const omit = () => {
     })
 }
 
+// 部门信息管理查询所有
+export const list_department = () => {
+    return http.post("/staff/list_department",null)
+}
+
 // 部门信息管理修改
 export const edit = () => {
     return http.post("/staff/edit_department",null,{

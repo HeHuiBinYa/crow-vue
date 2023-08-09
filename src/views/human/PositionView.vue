@@ -24,7 +24,7 @@
       </template>
     </t-drawer>
   </t-col>
-  <t-row>
+  <t-row id="message-toggle">
     <t-col :span="12">
       <t-row>
         <t-col :span="10">
@@ -57,7 +57,7 @@
         <t-table
             row-key="eid" :data="data.records" :columns="columns"
             :selected-row-keys="selectedRowKeys" select-on-row-click
-            v-on:row-dblclick="dblclick"
+            v-on:row-dblclick="dblclick" :loading="bool"
             hover="true"
         />
       </t-list>
@@ -65,7 +65,7 @@
     <t-col :span="12">
       <t-pagination class="page" v-model="query.position_size" :total="query.total"
                     @page-size-change="onPageSizeChange" :max-page-btn="5" :folded-max-page-btn="5"
-                    :page-size="query.pageSize"
+                    :page-size="query.pageSize" :loading="bool"
                     @current-change="onCurrentChange" :show-page-size="false"/>
     </t-col>
   </t-row>
@@ -126,7 +126,7 @@ const incres = function (){
   }
   increases().then(function (item) {
     if (item.code === 200){
-      position.value.plevel ="";
+      position.value.plevel="";
       position.value.psalary="";
       position.value.position="";
       MessagePlugin.info({content: item.message, duration: 1000, zIndex: 1001, attach: '#message-toggle'})
