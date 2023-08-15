@@ -1,6 +1,11 @@
 import http from "@/http";
 import {departmentStore} from "@/store/staff/department";
 
+// 部门状型图
+export const columnarDepartment = () => {
+    return http.post("/staff/columnarDepartment")
+}
+
 // 部门信息管理添加
 export const increase = () => {
     return http.post("/staff/increase_department",null,{

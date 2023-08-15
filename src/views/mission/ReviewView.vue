@@ -1,50 +1,73 @@
 <template>
   <t-col :span="12">
-    <t-row>
+    <t-row id="message-toggle">
+      <t-col>
+        <t-drawer
+            v-model:visible="visible"
+            header="物料审核"
+            :on-overlay-click="() => (visible = false)"
+            :placement="placements"
+            @cancel="visible = false" size="25%" @confirm="examine"
+        >
+          <t-col :span="12">
+            <t-input  placeholder="请输入内容" />
+          </t-col>
+
+          <t-col :span="12">
+            <t-input  placeholder="请输入内容" />
+          </t-col>
+
+          <t-row>
+            <t-col :span="12">
+              <t-input   placeholder="请输入内容" />
+            </t-col>
+          </t-row>
+
+        </t-drawer>
+      </t-col>
       <t-col :span="12">
         <t-row class="row">
           <t-col :span="12">
-            <h3>待审核产品档案：12/30</h3>
+            <h3>待审核产品档案：{{data.current}}/{{data.total}}</h3>
           </t-col>
-          <t-col :span="12" class="col"><t-input label="设计单编号：" size="large" disabled/></t-col>
-          <t-col :span="6" class="col"><t-input label="产品名称：" size="large" disabled/></t-col>
-          <t-col :span="6" class="col"><t-input label="设计人：" size="large" disabled/></t-col>
-          <t-col :span="6" class="col"><t-input label="审核人：" size="large" disabled/></t-col>
-          <t-col :span="6" class="col"><t-input label="审核时间：" size="large" disabled/></t-col>
+          <t-col :span="12" class="col"><t-input label="设计单编号：" v-model="page.pid" size="large" /></t-col>
+          <t-col :span="6" class="col"><t-input label="产品名称：" v-model="page.name" size="large" /></t-col>
+          <t-col :span="6" class="col"><t-input label="设计人：" v-model="page.register" size="large" /></t-col>
+          <t-col :span="6" class="col"><t-input label="审核人：" v-model="page.checker" size="large" disabled/></t-col>
+          <t-col :span="6" class="col">
+            <t-input label="物料总成本：" v-model="page.total" size="large" />
+          </t-col>
           <t-col :span="12" class="col">
-            <t-textarea placeholder="产品描述" size="large" disabled/>
+            <t-textarea placeholder="产品描述" v-model="page.descr" size="large" />
           </t-col>
-          <t-col :span="12">
-            <t-input label="物料总成本：" size="large" disabled/>
-          </t-col>
+
           <t-col :span="12">
             <t-list >
-              <t-table v-model:columns="columns" v-model:data="data" v-on:row-dblclick="dblclick" :hover="true"/>
+              <t-table v-model:columns="columns" :data="materials" v-on:row-dblclick="dblclick" :hover="true"/>
             </t-list>
           </t-col>
         </t-row>
       </t-col>
 
       <t-col :span="12">
-        <t-radio-group default-value="1" @change="onChange" class="group">
-          <p><t-radio value="S001-1">审核通过</t-radio></p>
-          <p><t-radio value="S001-2">审核不通过</t-radio></p>
+        <t-radio-group :value="page.checktag" v-model="page.checktag" @change="onChange" class="group">
+          <t-radio value="S001-1">通过</t-radio>
+          <t-radio value="S001-2">未通过</t-radio>
         </t-radio-group>
-        <t-textarea placeholder="建议" size="large"/>
       </t-col>
 
       <t-col :span="12">
         <t-row style="margin: 20px">
           <t-col :span="2">
-            <t-button style="width: 100%">上一项</t-button>
+            <t-button style="width: 100%" @click="previous">上一项</t-button>
           </t-col>
           <t-col :span="3"></t-col>
           <t-col :span="2">
-            <t-button style="width: 100%">确认提交</t-button>
+            <t-button style="width: 100%" @click="examines">确认提交</t-button>
           </t-col>
           <t-col :span="3"></t-col>
           <t-col :span="2">
-            <t-button style="width: 100%">下一项</t-button>
+            <t-button style="width: 100%" @click="nextItem">下一项</t-button>
           </t-col>
         </t-row>
       </t-col>
@@ -54,35 +77,88 @@
 
 <script lang="ts" setup>
 import {ref} from "vue";
+import {examineSysFile, queryPageSysFile} from "@/http/design/sysFile"
+import {sysFileStore} from "@/store/design/file/index"
+import {userStore} from "@/store/user";
+import {MessagePlugin} from "tdesign-vue-next";
+import {pageSysHeroA} from "@/http/design/sysheroA";
 
-const header = ref("修改信息")
+const data = ref(sysFileStore().page.data)
+const page = ref(sysFileStore().page)
+const materials = ref(sysFileStore().page.materials)
 const visible = ref(false)
-const data = []
-for (let i = 1; i <= 6; i++) {
-  data.push({
-    mid: i,
-    design: 'AD100001AD1001'+i,
-    designname: 'XXX产品'+i,
-    type: 'XX',
-    describer: 'ADAWD'+i*10,
-    amount: i*10,
-    munit: i*100,
-    price: i*200,
-    pricesum:(i*200)*(i*10)
-  });
+const placements = "right"
+
+page.value.checker = userStore().account.ename
+
+const queryPage = () => {
+  data.value = []
+  materials.value = []
+  queryPageSysFile().then(item => {
+    data.value = item.data
+    materials.value = item.data.records[0].materials
+    page.value.fid = item.data.records[0].fid
+    page.value.name = item.data.records[0].name
+    page.value.pid = item.data.records[0].pid
+    page.value.register = item.data.records[0].register
+    page.value.descr = item.data.records[0].descr
+    console.log(materials.value)
+
+    for (let i=0;i<item.data.records[0].materials.length;i++){
+      page.value.total += item.data.records[0].materials[i].priceSum
+    }
+  })
+}
+queryPage()
+
+const previous = () => {
+  page.value.size ++
+  if (page.value.size >= data.value.total){
+    page.value.size = data.value.total
+  }
+  queryPage()
+}
+
+const nextItem = () => {
+  page.value.size --
+  if (page.value.size <= 0){
+    page.value.size = 1
+  }
+  queryPage()
+}
+
+const examine = () => {
+  visible.value = false
+}
+
+/*
+ 审核提交
+ */
+const examines = () => {
+  if (page.value.checktag == ""){
+    MessagePlugin.info({content: "审核未选择", duration: 1000, zIndex: 1001, attach: '#message-toggle'})
+    return ;
+  }
+  examineSysFile().then(item => {
+    if (item.code === 200){
+      queryPage()
+      MessagePlugin.info({content: item.message, duration: 1000, zIndex: 1001, attach: '#message-toggle'})
+    }else{
+      MessagePlugin.error({content: item.message, duration: 1000, zIndex: 1001, attach: '#message-toggle'})
+    }
+  })
 }
 
 const leftFixedColumn = ref(2);
 const columns = ref([
-  { colKey: 'mid', title: '序号',align: 'center',width: '80px',fixed: leftFixedColumn.value >= 2 ? 'left' : undefined},
   { colKey: 'design', title: '物料编号',align: 'center',width: '250px' ,fixed: leftFixedColumn.value >= 2 ? 'left' : undefined},
-  { colKey: 'designname', title: '物料名称',align: 'center',width: '120px'},
+  { colKey: 'designName', title: '物料名称',align: 'center',width: '120px'},
   { colKey: 'type', title: '用途类型',align: 'center',width: '120px'},
   { colKey: 'type', title: '描述',align: 'center',width: '120px'},
   { colKey: 'amount', title: '数量',align: 'center',width: '120px'},
   { colKey: 'munit', title: '单位',align: 'center',width: '120px'},
   { colKey: 'price', title: '单价（元）',align: 'center',width: '120px'},
-  { colKey: 'pricesum', title: '小计（元）',align: 'center',width: '120px'},
+  { colKey: 'priceSum', title: '小计（元）',align: 'center',width: '120px'},
 ]);
 
 // 关闭

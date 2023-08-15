@@ -1,6 +1,43 @@
 <template>
-  <t-drawer v-model:visible="visible"  size="medium" header="抽屉标题">
-    <p>抽屉的内容</p>
+  <t-drawer v-model:visible="visible"  size="medium" header="我的信息">
+    <t-row>
+      <t-col :span="12">
+        <span>员工编号</span>
+        <t-input v-model="userStore().account.staffid"/>
+      </t-col>
+      <t-col :span="12">
+        <span>名称</span>
+        <t-input v-model="userStore().account.ename"/>
+      </t-col>
+      <t-col :span="12">
+        <span>性别</span>
+        <t-input v-model="userStore().account.sex"/>
+      </t-col>
+      <t-col :span="12">
+        <span>出生日期</span>
+        <t-input v-model="userStore().account.birth"/>
+      </t-col>
+      <t-col :span="12">
+        <span>员工年龄</span>
+        <t-input v-model="userStore().account.age"/>
+      </t-col>
+      <t-col :span="12">
+        <span>出生地址</span>
+        <t-input v-model="userStore().account.place"/>
+      </t-col>
+      <t-col :span="12">
+        <span>电话</span>
+        <t-input v-model="userStore().account.tel"/>
+      </t-col>
+      <t-col :span="12">
+        <span>身份证号码</span>
+        <t-input v-model="userStore().account.card"/>
+      </t-col>
+      <t-col :span="12">
+        <span>入职时间</span>
+        <t-input v-model="userStore().account.entrytime"/>
+      </t-col>
+    </t-row>
   </t-drawer>
 
   <t-row class="item-body">
@@ -13,7 +50,6 @@
         <template #logo>
           <img :width="collapsed ? 35 : 136" :src="iconUrl" alt="logo" class="img"/>
         </template>
-
 
           <t-menu-group title="主导航">
             <t-tooltip content="仪表盘" placement="right">
@@ -172,13 +208,13 @@
         </t-menu-group>
 
         <template #operations>
-          <t-tooltip content="审核消息">
-            <t-button variant="text" shape="square" @click="visible = true">
-              <template #icon><t-icon name="mail" /></template>
-            </t-button>
-          </t-tooltip>
+<!--          <t-tooltip content="审核消息">-->
+<!--            <t-button variant="text" shape="square" @click="visible = true">-->
+<!--              <template #icon><t-icon name="mail" /></template>-->
+<!--            </t-button>-->
+<!--          </t-tooltip>-->
           <t-tooltip content="我的信息">
-            <t-button variant="text" shape="square" @click="visible = true">
+            <t-button variant="text" shape="square" @click="getTok">
               <template #icon><t-icon name="user" /></template>
             </t-button>
           </t-tooltip>
@@ -195,15 +231,17 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
+import {ref, watch} from 'vue';
 import {quit} from '@/http/auth/index'
 import router from "@/router";
-import {useCounterStore} from "@/store";
+import {userStore} from "@/store/user/index";
+import {getAemployee} from "@/http/staff/employee";
 
 const bool = ref(false)
 const item = ref('item1')
 const collapsed = ref(false)
 const iconUrl = ref('https://resources.hehuibin.cn/img2.png')
+const accloyee = ref(userStore().account)
 
 // 首页
 const isYes = ref(false)
@@ -223,14 +261,14 @@ const changeCollapsed = () => {
 };
 
 const quits = () => {
-  // quit().then(item => {
-  //   if (item.data == true){
-  //     useCounterStore().user.tok = "";
-  //     useCounterStore().user.role = "";
-  //     useCounterStore().user.password = "";
+  quit().then(item => {
+    if (item.data == true){
+      userStore().user.tok = "";
+      userStore().user.role = "";
+      userStore().user.password = "";
       router.push("/")
-  //   }
-  // })
+    }
+  })
 }
 
 const changeHandler = (active: any) => {
@@ -238,6 +276,26 @@ const changeHandler = (active: any) => {
   item.value = active
 };
 
+const getTok = () => {
+  getAemployee().then(item => {
+    userStore().account.eid = item.data.eid
+    userStore().account.staffid = item.data.staffid
+    userStore().account.ename = item.data.ename
+    userStore().account.sex = item.data.sex
+    userStore().account.birth = item.data.birth
+    userStore().account.place = item.data.place
+    userStore().account.age = item.data.age
+    userStore().account.tel = item.data.tel
+    userStore().account.card = item.data.card
+    userStore().account.entrytime = item.data.entrytime
+  })
+  visible.value = true
+}
+getTok()
+
+if (userStore().user.tok == ""){
+  router.push("/")
+}
 
 </script>
 

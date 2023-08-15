@@ -1,6 +1,6 @@
 import http from "@/http"
 import {employeeStore} from "@/store/staff/employee";
-
+import {userStore} from "@/store/user/index"
 
 export const getStaffId = () => {
     return http.get("/staff/employee_id")
@@ -60,6 +60,14 @@ export const page_association = () => {
             terminationDate: employeeStore().data.association.employeeVo.leavetim[1],
             size: employeeStore().data.association.employeeVo.size,
             sizePage: employeeStore().data.association.employeeVo.sizePage
+        }
+    })
+}
+
+export const getAemployee = () => {
+    return http.post("/staff/getAemployee",null,{
+        params: {
+            tok: userStore().user.tok
         }
     })
 }

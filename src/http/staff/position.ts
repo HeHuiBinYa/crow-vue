@@ -1,6 +1,11 @@
 import http from "@/http";
 import {positionStore} from "@/store/staff/position";
 
+// 职业状型图
+export const columnarPosition = () => {
+    return http.post("/staff/columnarPosition")
+}
+
 // 部门职位管理添加
 export const increases = () => {
     return http.post("/staff/increase_position",null,{

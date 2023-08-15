@@ -8,6 +8,18 @@ export const userStore = store('user',{
                 password: "",
                 tok: "",
                 role: "",
+            },
+            account: {
+                eid: '',
+                staffid: '',
+                ename: '',
+                sex: '',
+                birth: '',
+                place: '',
+                age: '',
+                tel: '',
+                card: '',
+                entrytime: ''
             }
         }
     },

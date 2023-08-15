@@ -51,7 +51,7 @@
 
 
             <t-col class="col-3">
-              <p>xxxxxxxxxxxxxxxxxxx</p>
+              <p>成功是努力的结晶，只有努力才会有成功</p>
             </t-col>
           </t-row>
         </t-col>
@@ -62,13 +62,13 @@
 
 <script lang="ts" setup>
 import router from "@/router";
-// import {login,getRole} from "@/http/auth/index";
+import {login,getRole} from "@/http/auth/index";
 import {userStore} from "@/store/user";
 import {ref} from "vue";
 import {MessagePlugin} from "tdesign-vue-next";
 
 const store = userStore()
-const auth = ref('')
+const auth = ref([])
 const msg = ref()
 
 const img = [
@@ -78,29 +78,26 @@ const img = [
   'https://resources.hehuibin.cn/2250496836.jpeg']
 
 const logon = function (){
-
-  // login(store.user).then(item => {
-    // if (item.code == 200){
-    //   store.user.tok = item.data.tok;
-    //   store.user.username = item.data.username;
-    //   store.user.role = item.data.role;
-    //   store.user.password = "";
+  login(store.user).then(item => {
+    if (item.code == 200){
+      store.user.tok = item.data.tok;
+      store.user.username = item.data.username;
+      store.user.role = item.data.role;
+      store.user.password = "";
       router.push("/home")
-    // }else{
-    //   msg.value = MessagePlugin.info({
-    //     content: item.message,
-    //     duration: 1000,
-    //     zIndex: 1001,
-    //     attach: '#message-toggle'
-    //   })
-    // }
-  // })
+    }else{
+      msg.value = MessagePlugin.info({content: item.message, duration: 1000, zIndex: 1001, attach: '#message-toggle'})
+    }
+  })
 }
 
-// getRole().then(item => {
-//   auth.value=item.data
-//   store.user.role=item.data[0].role
-// })
+if (auth.value.length == 0){
+  getRole().then(item => {
+    auth.value=item.data
+    store.user.role=item.data[0].role
+  })
+}
+
 </script>
 
 <style lang="scss">
