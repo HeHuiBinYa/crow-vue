@@ -1,48 +1,48 @@
 <template>
   <t-col :span="12">
-    <t-row id="message-toggle">
-      <t-col>
-        <t-drawer
-            v-model:visible="visible"
-            header="物料审核"
-            :on-overlay-click="() => (visible = false)"
-            :placement="placements"
-            @cancel="visible = false" size="25%" @confirm="examine"
-        >
-          <t-col :span="12">
-            <t-input  placeholder="请输入内容" />
-          </t-col>
+    <t-row id="message-toggle" style="height: 89vh">
+<!--      <t-col>-->
+<!--        <t-drawer-->
+<!--            v-model:visible="visible"-->
+<!--            header="物料审核"-->
+<!--            :on-overlay-click="() => (visible = false)"-->
+<!--            :placement="placements"-->
+<!--            @cancel="visible = false" size="25%" @confirm="examine"-->
+<!--        >-->
+<!--          <t-col :span="12">-->
+<!--            <t-input  placeholder="请输入内容" />-->
+<!--          </t-col>-->
 
-          <t-col :span="12">
-            <t-input  placeholder="请输入内容" />
-          </t-col>
+<!--          <t-col :span="12">-->
+<!--            <t-input  placeholder="请输入内容" />-->
+<!--          </t-col>-->
 
-          <t-row>
-            <t-col :span="12">
-              <t-input   placeholder="请输入内容" />
-            </t-col>
-          </t-row>
+<!--          <t-row>-->
+<!--            <t-col :span="12">-->
+<!--              <t-input   placeholder="请输入内容" />-->
+<!--            </t-col>-->
+<!--          </t-row>-->
 
-        </t-drawer>
-      </t-col>
+<!--        </t-drawer>-->
+<!--      </t-col>-->
       <t-col :span="12">
         <t-row class="row">
           <t-col :span="12">
-            <h3>待审核产品档案：{{data.current}}/{{data.total}}</h3>
+            <h3>待复核产品档案：{{data.current}}/{{data.total}}</h3>
           </t-col>
-          <t-col :span="12" class="col"><t-input label="设计单编号：" v-model="page.pid" size="large" /></t-col>
-          <t-col :span="6" class="col"><t-input label="产品名称：" v-model="page.name" size="large" /></t-col>
-          <t-col :span="6" class="col"><t-input label="设计人：" v-model="page.register" size="large" /></t-col>
+          <t-col :span="12" class="col"><t-input label="设计单编号：" v-model="page.pid" size="large" disabled/></t-col>
+          <t-col :span="6" class="col"><t-input label="产品名称：" v-model="page.name" size="large" disabled/></t-col>
+          <t-col :span="6" class="col"><t-input label="设计人：" v-model="page.register" size="large" disabled/></t-col>
           <t-col :span="6" class="col"><t-input label="审核人：" v-model="page.checker" size="large" disabled/></t-col>
           <t-col :span="6" class="col">
-            <t-input label="物料总成本：" v-model="page.total" size="large" />
+            <t-input label="物料总成本：" v-model="page.total" size="large" disabled/>
           </t-col>
           <t-col :span="12" class="col">
-            <t-textarea placeholder="产品描述" v-model="page.descr" size="large" />
+            <t-textarea placeholder="产品描述" status="success" v-model="page.descr" size="large" disabled/>
           </t-col>
 
           <t-col :span="12">
-            <t-list >
+            <t-list style="height: 30vh">
               <t-table v-model:columns="columns" :data="materials" v-on:row-dblclick="dblclick" :hover="true"/>
             </t-list>
           </t-col>
@@ -95,17 +95,25 @@ const queryPage = () => {
   data.value = []
   materials.value = []
   queryPageSysFile().then(item => {
-    data.value = item.data
-    materials.value = item.data.records[0].materials
-    page.value.fid = item.data.records[0].fid
-    page.value.name = item.data.records[0].name
-    page.value.pid = item.data.records[0].pid
-    page.value.register = item.data.records[0].register
-    page.value.descr = item.data.records[0].descr
-    console.log(materials.value)
+    if (item.data.records.length > 0){
+      data.value = item.data
+      materials.value = item.data.records[0].materials
+      page.value.fid = item.data.records[0].fid
+      page.value.name = item.data.records[0].name
+      page.value.pid = item.data.records[0].pid
+      page.value.register = item.data.records[0].register
+      page.value.descr = item.data.records[0].descr
+      console.log(materials.value)
 
-    for (let i=0;i<item.data.records[0].materials.length;i++){
-      page.value.total += item.data.records[0].materials[i].priceSum
+      for (let i=0;i<item.data.records[0].materials.length;i++){
+        page.value.total += item.data.records[0].materials[i].priceSum
+      }
+    }else{
+      page.value.fid = ""
+      page.value.name = ""
+      page.value.pid = ""
+      page.value.register = ""
+      page.value.descr = ""
     }
   })
 }
@@ -136,7 +144,7 @@ const examine = () => {
  */
 const examines = () => {
   if (page.value.checktag == ""){
-    MessagePlugin.info({content: "审核未选择", duration: 1000, zIndex: 1001, attach: '#message-toggle'})
+    MessagePlugin.error({content: "审核未选择", duration: 1000, zIndex: 1001, attach: '#message-toggle'})
     return ;
   }
   examineSysFile().then(item => {
@@ -168,7 +176,7 @@ const  drawerClose = () => {
 
 const dblclick = (row: any) => {
   console.log(row)
-  visible.value = true
+  // visible.value = true
 }
 
 const value = ref('');

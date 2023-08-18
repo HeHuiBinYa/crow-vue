@@ -176,12 +176,12 @@
 
             <t-input-group class="group">
               <span class="title">审核标志：</span>
-              <t-select type="text" class="range" placeholder="请选择您要查询的审核状态"/>
+              <t-select type="text" :options="auditMark" class="range" placeholder="请选择您要查询的审核状态"/>
             </t-input-group>
 
             <t-input-group class="group">
               <span class="title">生产标志：</span>
-              <t-select type="text" class="range" placeholder="请选择您要查询的审核状态"/>
+              <t-select type="text" class="range" :options="constAuditMark" placeholder="请选择您要查询的审核状态"/>
             </t-input-group>
           </t-list>
         </t-col>
@@ -220,6 +220,18 @@
 
 <script lang="ts" setup>
 import {ref} from "vue";
+
+const auditMark = [
+  { label : "等待审核", value: "S001-0" },
+  { label : "审核通过", value: "S001-1" },
+  { label : "审核不通过", value: "S001-2" },
+]
+
+const constAuditMark = [
+  { label : "待登记", value: "S001-0" },
+  { label : "未完工", value: "S001-1" },
+  { label : "已完工", value: "S001-2" },
+]
 
 const data = []
 const header = ref("修改信息")

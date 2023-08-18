@@ -112,4 +112,7 @@ const position = () => {
 #department,#position{
   height: 30vh;
 }
+#dec{
+  height: 40vh;
+}
 </style>

@@ -41,7 +41,7 @@
       <t-col :span="12">
         <t-input-group class="groups">
           <span class="titles">描述：</span>
-          <t-textarea type="text" class="ranges"  />
+          <t-textarea type="text" status="success" class="ranges"  />
         </t-input-group>
       </t-col>
     </t-row>
@@ -58,15 +58,16 @@
     <t-col :span="12">
       <t-row class="row">
         <t-col :span="12">
-          <h3>待审核入库申请：12/30</h3>
+          <h3>待审核入库申请：{{data.current}}/{{data.total}}</h3>
         </t-col>
         <t-col :span="12" class="col"><t-input label="入库申请单号：" size="large" disabled/></t-col>
-        <t-col :span="6" class="col"><t-input label="登记人：" suffix="元" size="large" disabled/></t-col>
         <t-col :span="6" class="col"><t-input label="产品名称：" size="large" disabled/></t-col>
-        <t-col :span="6" class="col"><t-select label="入库状态：" size="large" disabled/></t-col>
-        <t-col :span="6" class="col"><t-input label="入库人：" size="large" disabled/></t-col>
-        <t-col :span="6" class="col"><t-input label="总件数：" size="large" suffix="件" disabled/></t-col>
+        <t-col :span="6" class="col"><t-input label="出入库人：" size="large" disabled/></t-col>
+        <t-col :span="6" class="col"><t-input label="登记人：" suffix="元" size="large" disabled/></t-col>
+        <t-col :span="6" class="col"><t-input label="复核人：" size="large" disabled/></t-col>
         <t-col :span="6" class="col"><t-input label="总金额：" suffix="元" size="large" disabled/></t-col>
+        <t-col :span="6" class="col"><t-input label="总件数：" size="large" suffix="件" disabled/></t-col>
+        <t-col :span="6" class="col"><t-input label="确认出入库总件数：" suffix="件" size="large" disabled/></t-col>
 
         <t-col :span="12" class="col">
           <t-textarea placeholder="备注" size="large" disabled/>
@@ -107,6 +108,23 @@
 
 <script lang="ts" setup>
 import {ref} from "vue";
+import {examinePageWarehousing} from "@/http/inventopy/warehousing";
+import {MessagePlugin} from "tdesign-vue-next";
+import {warehousingStore} from "@/store/inventopy/warehousing";
+
+const page = warehousingStore().page
+
+const eageWarehousing = () => {
+  examinePageWarehousing().then(item => {
+    if (item.data.records.length > 0){
+      page.scheduling = item.data.records
+      MessagePlugin.error({content: "审核未选择", duration: 1000, zIndex: 1001, attach: '#message-toggle'})
+    }else{
+      MessagePlugin.error({content: item.message, duration: 1000, zIndex: 1001, attach: '#message-toggle'})
+    }
+  })
+}
+eageWarehousing()
 
 const header = ref("修改信息")
 const visible = ref(false)

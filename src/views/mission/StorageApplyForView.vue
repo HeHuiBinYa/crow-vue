@@ -41,7 +41,7 @@
       <t-col :span="12">
         <t-input-group class="groups">
           <span class="titles">描述：</span>
-          <t-textarea type="text" class="ranges"  />
+          <t-textarea type="text" status="success" class="ranges"  />
         </t-input-group>
       </t-col>
     </t-row>

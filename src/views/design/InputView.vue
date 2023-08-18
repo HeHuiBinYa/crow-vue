@@ -87,9 +87,9 @@
       </t-col>
     </t-row>
     <template #footer>
-      <t-button theme="default" @click="insert">添加物料</t-button>
-      <t-button theme="warning" @click="upd">修改物料</t-button>
-      <t-button theme="danger" @click="remove">删除物料</t-button>
+      <t-button theme="default" @click="insert" v-if="anniu">添加物料</t-button>
+      <t-button theme="warning" @click="upd" v-if="anniu==false">修改物料</t-button>
+      <t-button theme="danger" @click="remove" v-if="anniu==false">删除物料</t-button>
       <t-button variant="outline" @click="visible = false"> 取消 </t-button>
     </template>
   </t-drawer>
@@ -117,7 +117,7 @@ const datas = ref({
   heroB: [{}],
   heroC: [{}]
 })
-
+const anniu = ref(false)
 const design = ref(sysFileStore().file)
 
 const mate = ref(sysFileStore().mate)
@@ -166,7 +166,7 @@ const upd = () => {
   data.value[row.value].munit = mate.value.munit
   data.value[row.value].price = mate.value.price
   data.value[row.value].pricesum = mate.value.pricesum
-  console.log(data.value[row.value])
+  visible.value = false
 }
 
 // 添加按钮
@@ -183,6 +183,7 @@ const inser = () => {
   mate.value.munit = ""
   mate.value.price = ""
   mate.value.pricesum = ""
+  anniu.value = true
   visible.value = true
 }
 
@@ -225,7 +226,7 @@ const columns = ref([
   { colKey: 'design', title: '物料编号',align: 'center',width: '250px' ,fixed: leftFixedColumn.value >= 2 ? 'left' : undefined},
   { colKey: 'designname', title: '物料名称',align: 'center',width: '120px'},
   { colKey: 'type', title: '用途类型',align: 'center',width: '120px'},
-  { colKey: 'type', title: '描述',align: 'center',width: '120px'},
+  { colKey: 'describer', title: '描述',align: 'center',width: '120px'},
   { colKey: 'amount', title: '数量',align: 'center',width: '120px'},
   { colKey: 'munit', title: '单位',align: 'center',width: '120px'},
   { colKey: 'price', title: '单价（元）',align: 'center',width: '120px'},
@@ -249,6 +250,7 @@ const dblclick = (col: any) => {
   mate.value.munit = data.value[col.index].munit
   mate.value.price = data.value[col.index].price
   mate.value.pricesum = data.value[col.index].pricesum
+  anniu.value = false
   visible.value = true
 }
 
@@ -257,13 +259,11 @@ const addFile = () => {
   addSysFile().then(item => {
     console.log(item)
     if (item.code === 200){
-      MessagePlugin.info({content: item.message, duration: 1000, zIndex: 1001, attach: '#message-toggle'})
       design.value.fid = item.data
       for (let i=0;i<data.value.length;i++){
         addSysMaterials(data.value[i]).then(item => {
           console.log(item)
           if (item.code === 200){
-            MessagePlugin.info({content: item.message, duration: 1000, zIndex: 1001, attach: '#message-toggle'})
             design.value.fid = item.data
             reset()
           }else{
@@ -272,6 +272,7 @@ const addFile = () => {
           }
         })
       }
+      MessagePlugin.info({content: item.message, duration: 1000, zIndex: 1001, attach: '#message-toggle'})
     }else{
       console.log(item)
       MessagePlugin.info({content: item.message, duration: 1000, zIndex: 1001, attach: '#message-toggle'})
@@ -280,7 +281,7 @@ const addFile = () => {
 }
 
 const reset = () => {
-  data.value = []
+  data.value.length = 0
   design.value.name = ""
   design.value.fid = ""
   design.value.aid = ""

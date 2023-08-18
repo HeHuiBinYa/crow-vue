@@ -10,7 +10,7 @@ export const userStore = store('user',{
                 role: "",
             },
             account: {
-                eid: '',
+                eid: 0,
                 staffid: '',
                 ename: '',
                 sex: '',
@@ -19,7 +19,8 @@ export const userStore = store('user',{
                 age: '',
                 tel: '',
                 card: '',
-                entrytime: ''
+                entrytime: '',
+                did: 0
             }
         }
     },

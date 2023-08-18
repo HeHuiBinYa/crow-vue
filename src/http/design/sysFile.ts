@@ -52,3 +52,10 @@ export const examineSysFile = () => {
         }
     })
 }
+
+/**
+ * 获得所有档案
+ */
+export const selectSysFileList = () => {
+    return http.post("/design/queryFileList")
+}

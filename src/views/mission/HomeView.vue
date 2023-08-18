@@ -23,15 +23,17 @@ const tree =  [
     label: '入库申请提交',
   },
   {
-    label: '入库申请审核',
+    label: '入库申请复核',
   },
   {
-    label: '产品档案设计审核',
+    label: '产品设计档案复核',
   },
   {
-    label: '生产计划设计审核',
+    label: '生产计划设计复核',
   },
-
+  {
+    label: '生产计划完工存档',
+  },
 ];
 
 const che = (value: any) => {

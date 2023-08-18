@@ -112,12 +112,17 @@ const routes: Array<RouteRecordRaw> = [
         children: [
           {
             path: '/mission/review',
-            name: '产品档案设计审核',
+            name: '产品设计档案复核',
             component: () => { return import((`@/views/mission/ReviewView.vue`))}
           },
           {
+            path: '/mission/finished',
+            name: '生产计划完工存档',
+            component: () => { return import((`@/views/mission/FinishedView.vue`))}
+          },
+          {
             path: '/mission/product',
-            name: '生产计划设计审核',
+            name: '生产计划设计复核',
             component: () => { return import((`@/views/mission/ProductView.vue`))}
           },
           {
@@ -127,7 +132,7 @@ const routes: Array<RouteRecordRaw> = [
           },
           {
             path: '/mission/examine',
-            name: '入库申请审核',
+            name: '入库申请复核',
             component: () => { return import((`@/views/mission/StorageExamineView.vue`))}
           }
         ]

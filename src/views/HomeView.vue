@@ -40,7 +40,7 @@
     </t-row>
   </t-drawer>
 
-  <t-row class="item-body">
+  <t-row class="item-body" id="message-toggle">
     <t-col :span="1.5">
       <t-menu theme="light" v-model="item"
               default-value="item2"
@@ -231,17 +231,16 @@
 </template>
 
 <script lang="ts" setup>
-import {ref, watch} from 'vue';
+import {ref} from 'vue';
 import {quit} from '@/http/auth/index'
 import router from "@/router";
 import {userStore} from "@/store/user/index";
 import {getAemployee} from "@/http/staff/employee";
 
 const bool = ref(false)
-const item = ref('item1')
+const item = ref('item99')
 const collapsed = ref(false)
 const iconUrl = ref('https://resources.hehuibin.cn/img2.png')
-const accloyee = ref(userStore().account)
 
 // 首页
 const isYes = ref(false)
@@ -262,12 +261,10 @@ const changeCollapsed = () => {
 
 const quits = () => {
   quit().then(item => {
-    if (item.data == true){
-      userStore().user.tok = "";
-      userStore().user.role = "";
-      userStore().user.password = "";
-      router.push("/")
-    }
+    userStore().user.tok = "";
+    userStore().user.role = "";
+    userStore().user.password = "";
+    router.push("/")
   })
 }
 
