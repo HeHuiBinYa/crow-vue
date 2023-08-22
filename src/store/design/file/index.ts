@@ -43,9 +43,44 @@ export const sysFileStore = store('sysFile',{
                 amount: "",
                 munit: "",
                 price: "",
-                total:""
             },
-            data: []
+            data: [],
+            files: {
+                data: [],
+                size: 1,
+                sizePage: 10,
+                pid: "",
+                name: "",
+                grou: "",
+                aid: "",
+                bid: "",
+                cid: "",
+                type: "",
+                unit: "",
+                register: "",
+                checker: "",
+                startTime: "",
+                startMoney: "",
+                endMoney: "",
+                startMoneys: "",
+                endMoneys: "",
+                checktag: "",
+                SysFile: {
+                    fid: "",
+                    register: "",
+                    name: "",
+                    aid: "",
+                    bid: "",
+                    cid: "",
+                    type: "",
+                    unit: "",
+                    grou: "",
+                    costPrice: "",
+                    listPrice: "",
+                    descr: "",
+                    materials: []
+                }
+            }
         }
     },
     actions: {

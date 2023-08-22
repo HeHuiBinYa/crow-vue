@@ -25,3 +25,49 @@ export const insertProcedure = (data: any) => {
         }
     })
 }
+
+export const insertNowProcedure = () => {
+    return http.post("/product/insertNowProcedure",null,{
+        params: {
+            prdetailsnumber: manufactureStore().queryManufacture.procedure.prdetailsnumber,
+            prprocedureid: manufactureStore().queryManufacture.procedure.prprocedureid,
+            procedurename: manufactureStore().queryManufacture.procedure.procedurename,
+            prlabourhouramount: manufactureStore().queryManufacture.procedure.prlabourhouramount,
+            prreallabourhouramount: manufactureStore().queryManufacture.procedure.prreallabourhouramount,
+            prsubtotal: manufactureStore().queryManufacture.procedure.prsubtotal,
+            prrealsubtotal: manufactureStore().queryManufacture.procedure.prrealsubtotal,
+            prmodulesubtotal: manufactureStore().queryManufacture.procedure.prmodulesubtotal,
+            prrealmodulesubtotal: manufactureStore().queryManufacture.procedure.prrealmodulesubtotal,
+            prcostprice: manufactureStore().queryManufacture.procedure.prcostprice,
+            prdemandamount: manufactureStore().queryManufacture.procedure.prdemandamount,
+            prrealamount: manufactureStore().queryManufacture.procedure.prrealamount,
+            maid: manufactureStore().queryManufacture.manufacture.maid,
+        }
+    })
+}
+
+export const deleteProcedureById = () => {
+    return http.post("/product/deleteProcedureById",null,{
+        params: {
+            id: manufactureStore().queryManufacture.procedure.prid
+        }
+    })
+}
+
+export const updateProcedure = () => {
+    return http.post("/product/updateProcedure",null,{
+        params: {
+            procedurename: manufactureStore().queryManufacture.procedure.procedurename,
+            prlabourhouramount: manufactureStore().queryManufacture.procedure.prlabourhouramount,
+            prreallabourhouramount: manufactureStore().queryManufacture.procedure.prreallabourhouramount,
+            prsubtotal: manufactureStore().queryManufacture.procedure.prsubtotal,
+            prrealsubtotal: manufactureStore().queryManufacture.procedure.prrealsubtotal,
+            prmodulesubtotal: manufactureStore().queryManufacture.procedure.prmodulesubtotal,
+            prrealmodulesubtotal: manufactureStore().queryManufacture.procedure.prrealmodulesubtotal,
+            prcostprice: manufactureStore().queryManufacture.procedure.prcostprice,
+            prdemandamount: manufactureStore().queryManufacture.procedure.prdemandamount,
+            prrealamount: manufactureStore().queryManufacture.procedure.prrealamount,
+            prid: manufactureStore().queryManufacture.procedure.prid,
+        }
+    })
+}

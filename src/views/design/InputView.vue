@@ -19,7 +19,7 @@
         </t-col>
         <t-col :span="12">
           <t-button @click="inser">添加物料</t-button>
-          <t-list style="height: 36vh">
+          <t-list style="height: 34vh">
             <t-table v-model:columns="columns" v-model:data="data" v-on:row-dblclick="dblclick" :hover="true"/>
           </t-list>
         </t-col>
@@ -51,7 +51,7 @@
       <t-col :span="12">
         <t-input-group class="groups">
           <span class="titles">用途类型：</span>
-          <t-input type="text" v-model="mate.type" class="ranges"  />
+          <t-select v-model="mate.type" :options="types" class="ranges"  />
         </t-input-group>
       </t-col>
       <t-col :span="12">
@@ -121,6 +121,11 @@ const anniu = ref(false)
 const design = ref(sysFileStore().file)
 
 const mate = ref(sysFileStore().mate)
+
+const types = [
+  { label: "粉状合成", value: "粉状合成" },
+  { label: "液体合成", value: "液体合成" },
+]
 
 design.value.register = userStore().account.ename
 

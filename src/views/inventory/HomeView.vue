@@ -17,17 +17,11 @@
 import router from "@/router";
 import {ref} from "vue";
 
-const indicator = ref("安全库存配置管理")
+const indicator = ref("出入库调度管理")
 const tree =  [
   {
-    label: '入库申请管理',
-  },
-  {
     label: '出入库调度管理',
-  },
-  {
-    label: '安全库存配置管理',
-  },
+  }
 ];
 
 const che = (value: any) => {

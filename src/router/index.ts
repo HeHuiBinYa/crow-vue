@@ -66,11 +66,6 @@ const routes: Array<RouteRecordRaw> = [
             component: () => { return import((`@/views/design/HeroView.vue`))}
           },
           {
-            path: '/design/materials',
-            name: '产品物料管理',
-            component: () => { return import((`@/views/design/MaterialsView.vue`))}
-          },
-          {
             path: '/design/input',
             name: '产品档案登记',
             component: () => { return import((`@/views/design/InputView.vue`))}
@@ -108,7 +103,7 @@ const routes: Array<RouteRecordRaw> = [
         path: '/mission/home',
         name: '我的任务',
         component: () => { return import((`@/views/mission/HomeView.vue`))},
-        redirect: '/mission/review',
+        redirect: '/mission/applyFor',
         children: [
           {
             path: '/mission/review',
@@ -142,22 +137,12 @@ const routes: Array<RouteRecordRaw> = [
         path: '/inventory/home',
         name: '库存管理',
         component: () => { return import((`@/views/inventory/HomeView.vue`))},
-        redirect: "/inventory/stock",
+        redirect: "/inventory/storage",
         children: [
           {
             path: '/inventory/storage',
-            name: '入库申请管理',
-            component: () => { return import((`@/views/inventory/StorageView.vue`))}
-          },
-          {
-            path: '/inventory/dispatch',
             name: '出入库调度管理',
-            component: () => { return import((`@/views/inventory/DispatchView.vue`))}
-          },
-          {
-            path: '/inventory/stock',
-            name: '安全库存配置管理',
-            component: () => { return import((`@/views/inventory/SafeStockView.vue`))}
+            component: () => { return import((`@/views/inventory/StorageView.vue`))}
           }
         ]
       },

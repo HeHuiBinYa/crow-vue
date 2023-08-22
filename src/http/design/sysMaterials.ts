@@ -35,3 +35,43 @@ export const addSysMaterials = (data:any) => {
         }
     })
 }
+
+export const addMaterials = (data:any) => {
+    return http.post("/design/addSysMaterials",null,{
+        params: {
+            design: data.design,
+            designName: data.designname,
+            type: data.type,
+            describer: data.describer,
+            priceSum: data.pricesum,
+            amount: data.amount,
+            munit: data.munit,
+            price: data.price,
+            fid: sysFileStore().files.SysFile.fid
+        }
+    })
+}
+
+export const deleteSysMaterialsByMid = () => {
+    return http.post("/design/deleteSysMaterialsByMid",null,{
+        params: {
+            mid: sysFileStore().mate.mid
+        }
+    })
+}
+
+export const updateSysMaterials = (data:any) => {
+    return http.post("/design/updateSysMaterials",null,{
+        params: {
+            design: data.design,
+            designName: data.designname,
+            type: data.type,
+            describer: data.describer,
+            priceSum: data.pricesum,
+            amount: data.amount,
+            munit: data.munit,
+            price: data.price,
+            mid: data.mid,
+        }
+    })
+}

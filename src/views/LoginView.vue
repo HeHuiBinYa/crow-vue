@@ -39,11 +39,11 @@
                 <t-input class="input" v-model="store.user.username" label="账号" placeholder="请输入您的账号" size="large"/>
                 <t-input class="input" v-model="store.user.password" label="密码" placeholder="请输入您的密码" size="large" type="password"/>
 
-                <t-select v-model="store.user.role" class="input" size="large">
-                  <template v-for="(item,index) in auth" :key="index">
-                    <t-option :value="item.role">{{item.role}}</t-option>
-                  </template>
-                </t-select>
+<!--                <t-select v-model="store.user.role" class="input" size="large">-->
+<!--                  <template v-for="(item,index) in auth" :key="index">-->
+<!--                    <t-option :value="item.role">{{item.role}}</t-option>-->
+<!--                  </template>-->
+<!--                </t-select>-->
 
                 <t-button @click="logon" class="input" block="true" variant="dashed" size="large" ghost>登录</t-button>
               </t-col>
@@ -67,7 +67,7 @@ import {userStore} from "@/store/user";
 import {ref} from "vue";
 import {MessagePlugin} from "tdesign-vue-next";
 
-const store = userStore()
+const store = ref(userStore())
 const auth = ref([])
 const msg = ref()
 
@@ -78,12 +78,12 @@ const img = [
   'https://resources.hehuibin.cn/2250496836.jpeg']
 
 const logon = function (){
-  login(store.user).then(item => {
+  login(store.value.user).then(item => {
     if (item.code == 200){
-      store.user.tok = item.data.tok;
-      store.user.username = item.data.username;
-      store.user.role = item.data.role;
-      store.user.password = "";
+      store.value.user.tok = item.data.tok;
+      store.value.user.username = item.data.username;
+      store.value.user.role = item.data.role;
+      store.value.user.password = "";
       router.push("/home")
     }else{
       msg.value = MessagePlugin.info({content: item.message, duration: 1000, zIndex: 1001, attach: '#message-toggle'})
@@ -91,12 +91,12 @@ const logon = function (){
   })
 }
 
-if (auth.value.length == 0){
-  getRole().then(item => {
-    auth.value=item.data
-    store.user.role=item.data[0].role
-  })
-}
+// if (auth.value.length == 0){
+//   getRole().then(item => {
+//     auth.value=item.data
+//     store.user.role=item.data[0].role
+//   })
+// }
 
 </script>
 

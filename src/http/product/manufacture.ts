@@ -70,3 +70,59 @@ export const manufactureComplete = () => {
         }
     })
 }
+
+export const queryManufactureVo = () => {
+    return http.post("/product/queryManufactureVo",null,{
+        params: {
+            size: manufactureStore().queryManufacture.queryManufactureVo.size,
+            sizePage: manufactureStore().queryManufacture.queryManufactureVo.sizePage,
+            manufactureid: manufactureStore().queryManufacture.queryManufactureVo.manufactureid,
+            maproductid: manufactureStore().queryManufacture.queryManufactureVo.maproductid,
+            maproductname: manufactureStore().queryManufacture.queryManufactureVo.maproductname,
+            madesigner: manufactureStore().queryManufacture.queryManufactureVo.madesigner,
+            machecker: manufactureStore().queryManufacture.queryManufactureVo.machecker,
+            startMaamount: manufactureStore().queryManufacture.queryManufactureVo.startMaamount,
+            endMaamount: manufactureStore().queryManufacture.queryManufactureVo.endMaamount,
+            startMatesteramount: manufactureStore().queryManufacture.queryManufactureVo.startMatesteramount,
+            endMatesteramount: manufactureStore().queryManufacture.queryManufactureVo.endMatesteramount,
+            machecktag: manufactureStore().queryManufacture.queryManufactureVo.machecktag,
+            manufacturepriceduretag: manufactureStore().queryManufacture.queryManufactureVo.manufacturepriceduretag,
+        }
+    })
+}
+
+// 修改
+export const updateManufactureById = () => {
+    return http.post("/product/updateManufactureById",null,{
+        params: {
+            maid: manufactureStore().queryManufacture.manufacture.maid,
+            maproductname: manufactureStore().queryManufacture.manufacture.maproductname,
+            maamount: manufactureStore().queryManufacture.manufacture.maamount,
+            matesteramount: manufactureStore().queryManufacture.manufacture.matesteramount,
+            madesigner: manufactureStore().queryManufacture.manufacture.madesigner,
+            mamodulecostpricesum: manufactureStore().queryManufacture.manufacture.mamodulecostpricesum,
+            marealmodulecostpricesum: manufactureStore().queryManufacture.manufacture.marealmodulecostpricesum,
+            malabourcostpricesum: manufactureStore().queryManufacture.manufacture.malabourcostpricesum,
+            mareallabourcostpricesum: manufactureStore().queryManufacture.manufacture.mareallabourcostpricesum,
+            maproductdescribe: manufactureStore().queryManufacture.manufacture.maproductdescribe,
+        }
+    })
+}
+
+export const updateManufactureByMachecktag = () => {
+    return http.post("/product/updateManufactureById",null,{
+        params: {
+            maid: manufactureStore().queryManufacture.manufacture.maid,
+            machecktag: 'S001-0'
+        }
+    })
+}
+
+export const updateManufactureByManufacturepricedureTag = () => {
+    return http.post("/product/updateManufactureById",null,{
+        params: {
+            maid: manufactureStore().queryManufacture.manufacture.maid,
+            manufacturepriceduretag: 'S002-1'
+        }
+    })
+}

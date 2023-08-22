@@ -17,3 +17,27 @@ export const schedulingComplete = (data:any) => {
         }
     })
 }
+
+export const insertScheduling = (data: any) => {
+    return http.post("/inventopy/insertScheduling",null,{
+        params: {
+            scproductid: data.scproductid,
+            scproductname: data.scproductname,
+            scamount: data.scamount,
+            scamountunit: data.scamountunit,
+            sccostprice: data.sccostprice,
+            scubtotal: data.scubtotal,
+            scproductdescribe: data.scproductdescribe,
+            waid: warehousingStore().warehousingInsert.waid
+        }
+    })
+}
+
+export const updateSchedulingByScamount = () => {
+    return http.post("/inventopy/updateSchedulingByScamount",null,{
+        params: {
+            total: warehousingStore().WarehousingVo.dispatch.total,
+            scid: warehousingStore().WarehousingVo.dispatch.scid,
+        }
+    })
+}

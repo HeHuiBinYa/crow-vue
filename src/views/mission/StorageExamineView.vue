@@ -1,103 +1,47 @@
 <template>
-  <t-drawer v-model:visible="visible" size="medium" :header="header" :on-confirm="drawerClose" :close-btn="true">
-    <t-row>
-      <t-col :span="12">
-        <t-input-group class="groups">
-          <span class="titles">产品编号：</span>
-          <t-input type="text" class="ranges" disabled />
-        </t-input-group>
-      </t-col>
-      <t-col :span="12">
-        <t-input-group class="groups">
-          <span class="titles">产品名称：</span>
-          <t-input type="text" class="ranges"  />
-        </t-input-group>
-      </t-col>
-      <t-col :span="12">
-        <t-input-group class="groups">
-          <span class="titles">数量：</span>
-          <t-input type="text" class="ranges"  />
-        </t-input-group>
-      </t-col>
-      <t-col :span="12">
-        <t-input-group class="groups">
-          <span class="titles">单位：</span>
-          <t-input type="text" class="ranges"  />
-        </t-input-group>
-      </t-col>
-      <t-col :span="12">
-        <t-input-group class="groups">
-          <span class="titles">单价：</span>
-          <t-input type="text" class="ranges"/>
-        </t-input-group>
-      </t-col>
-      <t-col :span="12">
-        <t-input-group class="groups">
-          <span class="titles">小计：</span>
-          <t-input type="text" class="ranges"  />
-        </t-input-group>
-      </t-col>
-
-      <t-col :span="12">
-        <t-input-group class="groups">
-          <span class="titles">描述：</span>
-          <t-textarea type="text" status="success" class="ranges"  />
-        </t-input-group>
-      </t-col>
-    </t-row>
-
-    <template #footer>
-      <t-button theme="default">添加物料</t-button>
-      <t-button >修改物料</t-button>
-      <t-button theme="danger">删除物料</t-button>
-      <t-button variant="outline" @click="visible = false"> 取消 </t-button>
-    </template>
-  </t-drawer>
-
-  <t-row>
+  <t-row style="height: 89vh">
     <t-col :span="12">
       <t-row class="row">
         <t-col :span="12">
-          <h3>待审核入库申请：{{data.current}}/{{data.total}}</h3>
+          <h3>待审核入库申请：{{page.scheduling.current}}/{{page.scheduling.total}}</h3>
         </t-col>
-        <t-col :span="12" class="col"><t-input label="入库申请单号：" size="large" disabled/></t-col>
-        <t-col :span="6" class="col"><t-input label="产品名称：" size="large" disabled/></t-col>
-        <t-col :span="6" class="col"><t-input label="出入库人：" size="large" disabled/></t-col>
-        <t-col :span="6" class="col"><t-input label="登记人：" suffix="元" size="large" disabled/></t-col>
-        <t-col :span="6" class="col"><t-input label="复核人：" size="large" disabled/></t-col>
-        <t-col :span="6" class="col"><t-input label="总金额：" suffix="元" size="large" disabled/></t-col>
-        <t-col :span="6" class="col"><t-input label="总件数：" size="large" suffix="件" disabled/></t-col>
-        <t-col :span="6" class="col"><t-input label="确认出入库总件数：" suffix="件" size="large" disabled/></t-col>
+        <t-col :span="12" class="col"><t-input label="入库申请单号：" size="large" v-model="page.wagatherid" disabled/></t-col>
+        <t-col :span="6" class="col"><t-input label="出入库人：" size="large" v-model="page.wastorer" disabled/></t-col>
+        <t-col :span="6" class="col"><t-input label="登记人：" suffix="元" v-model="page.waregister" size="large" disabled/></t-col>
+        <t-col :span="6" class="col"><t-input label="复核人：" size="large" v-model="page.wachecker" disabled/></t-col>
+        <t-col :span="6" class="col"><t-input label="总金额：" suffix="元" v-model="page.wacostpricesum" size="large" disabled/></t-col>
+        <t-col :span="6" class="col"><t-input label="总件数：" size="large" v-model="page.waamountsum" suffix="件" disabled/></t-col>
+        <t-col :span="6" class="col"><t-input label="确认出入库总件数：" v-model="page.wagatheredamountsum" suffix="件" size="large" disabled/></t-col>
 
         <t-col :span="12" class="col">
-          <t-textarea placeholder="备注" size="large" disabled/>
+          <t-textarea placeholder="备注" size="large" v-model="page.manufactureid" disabled/>
         </t-col>
 
         <t-col :span="12">
           <t-list >
-            <t-table v-model:columns="columns" v-model:data="data" v-on:row-dblclick="dblclick" :hover="true"/>
+            <t-table v-model:columns="columns"  :data="records" :hover="true"/>
           </t-list>
         </t-col>
-        <t-col :span="12">
-          <t-radio-group default-value="1" @change="onChange" class="group">
-            <p><t-radio value="S001-1">审核通过</t-radio></p>
-            <p><t-radio value="S001-2">审核不通过</t-radio></p>
+
+        <t-col :span="12" style="margin: 20px">
+          <t-radio-group default-value="S001-1" v-model="page.wachecktag" @change="onChange" class="group">
+            <t-radio value="S001-1">审核通过</t-radio>
+            <t-radio value="S001-2">审核不通过</t-radio>
           </t-radio-group>
-          <t-textarea placeholder="建议" size="large"/>
         </t-col>
 
         <t-col :span="12">
           <t-row style="margin: 15px">
             <t-col :span="2">
-              <t-button style="width: 100%">上一项</t-button>
+              <t-button style="width: 100%" @click="previous">上一项</t-button>
             </t-col>
             <t-col :span="3"></t-col>
             <t-col :span="2">
-              <t-button style="width: 100%">确认提交</t-button>
+              <t-button style="width: 100%" @click="examine">确认提交</t-button>
             </t-col>
             <t-col :span="3"></t-col>
             <t-col :span="2">
-              <t-button style="width: 100%">下一项</t-button>
+              <t-button style="width: 100%" @click="nextItem">下一项</t-button>
             </t-col>
           </t-row>
         </t-col>
@@ -108,57 +52,87 @@
 
 <script lang="ts" setup>
 import {ref} from "vue";
-import {examinePageWarehousing} from "@/http/inventopy/warehousing";
+import {examinePageWarehousing, updateWarehousing} from "@/http/inventopy/warehousing";
 import {MessagePlugin} from "tdesign-vue-next";
 import {warehousingStore} from "@/store/inventopy/warehousing";
+import {userStore} from "@/store/user";
 
-const page = warehousingStore().page
+const page = ref(warehousingStore().page)
+const records = ref(warehousingStore().page.records)
+page.value.wachecker = userStore().account.ename
 
 const eageWarehousing = () => {
   examinePageWarehousing().then(item => {
     if (item.data.records.length > 0){
-      page.scheduling = item.data.records
-      MessagePlugin.error({content: "审核未选择", duration: 1000, zIndex: 1001, attach: '#message-toggle'})
+      page.value.scheduling = item.data
+      records.value = item.data.records[0].schedulings
+      page.value.waid = item.data.records[0].waid
+      page.value.wagatherid = item.data.records[0].wagatherid
+      page.value.wastorer = item.data.records[0].wastorer
+      page.value.waamountsum = item.data.records[0].waamountsum
+      page.value.wacostpricesum = item.data.records[0].wacostpricesum
+      page.value.wagatheredamountsum = item.data.records[0].wagatheredamountsum
+      page.value.waregister = item.data.records[0].waregister
+
+      console.log(page)
     }else{
-      MessagePlugin.error({content: item.message, duration: 1000, zIndex: 1001, attach: '#message-toggle'})
+      page.value.scheduling = []
+      records.value = []
+      page.value.waid = ""
+      page.value.wagatherid = ""
+      page.value.wastorer = ""
+      page.value.waamountsum = ""
+      page.value.wacostpricesum = ""
+      page.value.wagatheredamountsum = ""
+      page.value.waregister = ""
     }
   })
 }
 eageWarehousing()
 
-const header = ref("修改信息")
-const visible = ref(false)
-const data = []
-for (let i = 1; i <= 5; i++) {
-  data.push({
-    scproductid: '产品编号'+i,
-    scproductname: '产品名称'+i,
-    scamount: '数量'+i,
-    scamountunit: '单位'+i*10,
-    sccostprice: i*10,
-    scubtotal: i*100,
-  });
+const previous = () => {
+  page.value.size ++
+  page.value.wachecktag = ""
+  if (page.value.size >= page.value.scheduling.total){
+    page.value.size = page.value.scheduling.total
+  }
+  eageWarehousing()
+}
+
+const nextItem = () => {
+  page.value.size --
+  page.value.wachecktag = ""
+  if (page.value.size <= 0){
+    page.value.size = 1
+  }
+  eageWarehousing()
+}
+
+const examine = () => {
+  if (page.value.wachecktag == ""){
+    MessagePlugin.info({content: "审核选项未选中", duration: 1000, zIndex: 1001, attach: '#message-toggle'})
+    return ;
+  }
+  updateWarehousing().then(item => {
+    if (item.code === 200){
+      MessagePlugin.info({content: item.message, duration: 1000, zIndex: 1001, attach: '#message-toggle'})
+      page.value.size = 1
+      eageWarehousing()
+    }else{
+      MessagePlugin.error({content: item.message, duration: 1000, zIndex: 1001, attach: '#message-toggle'})
+    }
+  })
 }
 
 const leftFixedColumn = ref(2);
 const columns = ref([
-  { colKey: 'scproductid', title: '产品编号',align: 'center',width: '120px' ,fixed: leftFixedColumn.value >= 2 ? 'left' : undefined},
-  { colKey: 'scproductname', title: '产品名称',align: 'center',width: '120px'},
+  { colKey: 'scproductid', title: '产品编号',align: 'center',width: '150px' ,fixed: leftFixedColumn.value >= 2 ? 'left' : undefined},
+  { colKey: 'scproductname', title: '产品名称',align: 'center',width: '200px'},
   { colKey: 'scamount', title: '数量',align: 'center',width: '120px'},
   { colKey: 'scamountunit', title: '单位',align: 'center',width: '120px'},
   { colKey: 'sccostprice', title: '单价（元）',align: 'center',width: '120px'},
   { colKey: 'scubtotal', title: '小计（元）',align: 'center',width: '120px'},
 ]);
-
-// 关闭
-const  drawerClose = () => {
-  visible.value = false
-}
-
-const dblclick = (row: any) => {
-  console.log(row)
-  visible.value = true
-}
 
 const value = ref('');
 const onChange = (checkedValues: any) => {
